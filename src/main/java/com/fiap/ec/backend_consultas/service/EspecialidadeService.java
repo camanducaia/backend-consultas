@@ -15,4 +15,18 @@ public class EspecialidadeService {
     public List<Especialidade> listar() {
         return repository.findAll();
     }
+    public Especialidade buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Especialidade não encontrada"));
+    }
+    public Especialidade atualizar(Long id, Especialidade especialidadeAtualizada) {
+        Especialidade especialidade = buscarPorId(id);
+        especialidade.setNome(especialidadeAtualizada.getNome());
+        especialidade.setDescricao(especialidadeAtualizada.getDescricao());
+        return repository.save(especialidade);
+    }
+    public void deletar(Long id) {
+        Especialidade especialidade = buscarPorId(id);
+        repository.delete(especialidade);
+    }
 }
